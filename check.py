@@ -6,3 +6,11 @@ refs |= {f"images/{f}.jpg" for f in re.findall(r"\['([\w-]+)','", html.split('co
 missing = sorted(r for r in refs if not os.path.exists(r))
 assert not missing, missing
 print(f"OK {len(refs)} ảnh")
+
+# Chiết tính: mỗi phương thức thanh toán cộng đủ 100%, phần ngân hàng 0% hoặc 70%
+import json
+plans = json.loads(html.split('/*PLANS*/')[1].split('/*END*/')[0])
+for k, rows in plans.items():
+    assert abs(sum(r[2] * r[3] for r in rows) - 1) < 1e-9, k
+    assert round(sum(r[2] * r[3] for r in rows if r[4] == 'nh'), 9) in (0, 0.7), k
+print(f"OK {len(plans)} phương thức thanh toán")

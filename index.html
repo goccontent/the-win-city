@@ -35,6 +35,29 @@ h2.title{font-family:'Playfair Display',serif;font-size:clamp(30px,4.2vw,46px);l
 .dark{background:var(--forest);color:#fff}
 .center{text-align:center}.center .lead{margin:0 auto}
 .note{font-size:12.5px;color:var(--muted);margin-top:14px}
+.calc{margin-top:48px;background:var(--paper);border-radius:22px;box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;text-align:left}
+.calc-head{background:var(--forest);color:#fff;padding:24px 30px}
+.calc-head h3{font-family:'Playfair Display',serif;font-size:26px}
+.calc-head p{font-size:13.5px;color:rgba(255,255,255,.7)}
+.calc-body{padding:26px 30px}
+@media(max-width:600px){.calc-head,.calc-body{padding:20px 16px}}
+.field label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:600}
+.field input{font:600 18px 'Be Vietnam Pro',sans-serif;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;width:100%;max-width:300px;color:var(--forest);background:#fffdf8}
+.field input:focus{outline:none;border-color:var(--gold)}
+.pttt{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 16px}
+.pttt button{flex:1;min-width:150px;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;cursor:pointer;font:600 14.5px 'Be Vietnam Pro',sans-serif;color:var(--forest)}
+.pttt button small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+.pttt button.active{border-color:var(--gold);background:#fbf5e6;box-shadow:inset 0 0 0 1px var(--gold)}
+.sched{min-width:600px}
+.sched td.money{text-align:right;font-weight:700;color:var(--forest);white-space:nowrap}
+.sched tr.sum td{background:#f6f1e3;font-weight:800}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+.b-von{background:#e8f3e7;color:#22622a}.b-nh{background:#e4edf8;color:#1c4f8f}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+@media(max-width:700px){.summary{grid-template-columns:1fr}}
+.summary div{border:1px dashed var(--gold);border-radius:12px;padding:12px 14px;background:#fffcf3}
+.summary span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.summary b{display:block;font-size:20px;color:var(--forest)}
 
 /* NAV */
 .nav{position:sticky;top:0;z-index:50;background:rgba(15,35,64,.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,162,78,.25)}
@@ -237,7 +260,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <a class="brand" href="#top"><span class="logo">✦</span><span>THE WIN<br><b>CITY</b></span></a>
     <button class="burger" aria-label="Mở menu" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
     <ul class="menu" onclick="if(event.target.tagName==='A')this.classList.remove('open')">
-      <li><a href="#uu-dai" style="color:var(--gold-2);font-weight:700">Ưu đãi</a></li>
+      <li><a href="#uu-dai" style="color:var(--gold-2);font-weight:700">Ưu đãi</a></li><li><a href="#chiet-tinh">Chiết tính</a></li>
       <li><a href="#tong-quan">Tổng quan</a></li>
       <li><a href="#vi-tri">Vị trí</a></li>
       <li><a href="#san-pham">Sản phẩm</a></li>
@@ -297,6 +320,26 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     </div>
     <p class="note center">Điều kiện chi tiết, số lượng giới hạn và thời hạn của từng chương trình theo thông báo của chủ đầu tư; các chương trình có thể kết thúc trước hạn. Giá bán chưa được công bố trên trang – vui lòng liên hệ để nhận bảng giá.</p>
     <div class="btns" style="justify-content:center"><a class="btn btn-gold" href="#dang-ky" style="color:var(--forest)">Nhận bảng giá & chính sách</a></div>
+    <div class="calc reveal" id="chiet-tinh">
+      <div class="calc-head"><h3>Chiết tính lịch thanh toán</h3><p>Nhập tổng giá trị HĐMB (đã gồm VAT) của căn bạn quan tâm – bảng tự chia tiền từng đợt theo phương thức thanh toán.</p></div>
+      <div class="calc-body">
+        <div class="field"><label for="price">Tổng giá trị HĐMB (đồng, đã gồm VAT)</label><input id="price" inputmode="numeric" placeholder="VD: 2.000.000.000"></div>
+        <div class="pttt" id="pttt">
+          <button class="active" data-k="chuan">Thanh toán chuẩn<small>24 đợt · chiết khấu 2%</small></button>
+          <button data-k="gtd">Giãn tiến độ 36 tháng<small>37 đợt · nhẹ vốn</small></button>
+          <button data-k="n50">Thanh toán nhanh 50%<small>50% trong ~11 ngày đầu</small></button>
+          <button data-k="n70">Thanh toán nhanh 70%<small>70% trong ~11 ngày đầu</small></button>
+          <button data-k="n95">Thanh toán nhanh 95%<small>95% khi ký HĐMB</small></button>
+          <button data-k="vay1">Vay ngân hàng – 01<small>Vốn 15% đầu · ngân hàng 70%</small></button>
+          <button data-k="vay2">Vay ngân hàng – 02<small>Vốn 25% đầu · ngân hàng 70%</small></button>
+        </div>
+        <div class="table-wrap" style="margin-top:0">
+          <table class="sched"><thead><tr><th>Đợt</th><th>Thời điểm</th><th>Tỷ lệ</th><th style="text-align:right">Số tiền (đồng)</th><th>Ghi chú</th></tr></thead><tbody id="schedBody"></tbody></table>
+        </div>
+        <div class="summary" id="summary"></div>
+        <p class="note">Nguồn: “Bảng tính CK và PTTT (Nhịp 2)” theo chính sách bán hàng của chủ đầu tư áp dụng từ 21/03/2026. Đặt cọc 50.000.000đ/sản phẩm, đợt 1 đã trừ tiền cọc. Tỷ lệ tính trên tổng giá trị HĐMB đã gồm VAT; đợt bàn giao thực tế gồm phần VAT còn lại nên số tiền đợt bàn giao và đợt sổ hồng có thể lệch nhẹ – số chính xác theo Phụ lục 01 của HĐMB. Chưa gồm kinh phí bảo trì 2% (đóng khi nhận bàn giao). Chiết khấu 2% thanh toán chuẩn giới hạn 150 sản phẩm, giãn tiến độ giới hạn 100 sản phẩm, voucher 20 triệu khi vay ngân hàng áp dụng 100 sản phẩm. Số liệu chỉ mang tính tham khảo.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -512,7 +555,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       </div>
       <div class="two">
         <div class="f"><label for="rType">Quan tâm loại căn</label><select id="rType"><option>Studio</option><option>1 phòng ngủ / 1PN+</option><option>2 phòng ngủ</option><option>3 phòng ngủ / Dual key</option><option>Shophouse</option><option>Chưa chọn – cần tư vấn</option></select></div>
-        <div class="f"><label for="rPay">Phương thức thanh toán</label><select id="rPay"><option>Vay ngân hàng</option><option>Thanh toán chuẩn</option><option>Giãn tiến độ</option><option>Chưa rõ</option></select></div>
+        <div class="f"><label for="rPay">Phương thức thanh toán</label><select id="rPay"><option>Vay ngân hàng</option><option>Thanh toán chuẩn</option><option>Giãn tiến độ 36 tháng</option><option>Thanh toán nhanh 50%</option><option>Thanh toán nhanh 70%</option><option>Thanh toán nhanh 95%</option><option>Chưa rõ</option></select></div>
       </div>
       <div class="f"><label for="rNeed">Nhu cầu</label><select id="rNeed"><option>Mua để ở</option><option>Mua cho thuê / đầu tư</option><option>Kinh doanh</option><option>Đăng ký tham quan dự án</option></select></div>
       <div class="f"><label for="rNote">Ghi chú</label><textarea id="rNote" rows="2" placeholder="Câu hỏi hoặc thời gian thuận tiện để liên hệ"></textarea></div>
@@ -584,6 +627,44 @@ function closeLB(){ lb.classList.remove('open'); }
 function stepLB(d){ lbIdx = (lbIdx + d + lbList.length) % lbList.length; showLB(); }
 document.addEventListener('keydown', e => { if(!lb.classList.contains('open')) return;
   if(e.key === 'Escape') closeLB(); if(e.key === 'ArrowRight') stepLB(1); if(e.key === 'ArrowLeft') stepLB(-1); });
+
+/* ---------- Chiết tính lịch thanh toán ---------- */
+// [đợt, thời điểm, tỷ lệ mỗi đợt, số đợt, nguồn tiền]; tỷ lệ trên tổng HĐMB gồm VAT (check.py kiểm tổng = 100%)
+// ponytail: đợt bàn giao/sổ hồng tính phẳng theo %, bỏ qua phần VAT dồn vào đợt bàn giao (cần đơn giá đất trừ thuế theo diện tích); số chính xác theo Phụ lục 01
+const PLANS = /*PLANS*/{
+ "chuan":[["Đợt 1","Ký HĐMB – trong 10 ngày kể từ ký TTĐC",0.1,1,"von"],["Đợt 2","30 ngày sau đợt 1",0.1,1,"von"],["Đợt 3 – 12","Mỗi 30 ngày một đợt",0.02,10,"von"],["Đợt 13 – 22","Mỗi 30 ngày một đợt",0.03,10,"von"],["Đợt 23","Thông báo bàn giao (dự kiến Quý 1/2028)",0.25,1,"von"],["Đợt 24","Thông báo bàn giao sổ hồng",0.05,1,"von"]],
+ "gtd":[["Đợt 1","Ký HĐMB – trong 10 ngày kể từ ký TTĐC",0.1,1,"von"],["Đợt 2","30 ngày sau đợt 1",0.1,1,"von"],["Đợt 3 – 14","Mỗi 30 ngày một đợt",0.005,12,"von"],["Đợt 15 – 22","Mỗi 30 ngày một đợt",0.01,8,"von"],["Đợt 23","30 ngày sau đợt 22",0.15,1,"von"],["Đợt 24 – 35","Mỗi 30 ngày một đợt",0.03,12,"von"],["Đợt 36","Thông báo bàn giao (dự kiến Quý 1/2028)",0.1,1,"von"],["Đợt 37","Thông báo bàn giao sổ hồng",0.05,1,"von"]],
+ "n50":[["Đợt 1","Ký HĐMB – trong 10 ngày kể từ ký TTĐC",0.3,1,"von"],["Đợt 2","1 ngày sau đợt 1",0.2,1,"von"],["Đợt 3","450 ngày sau đợt 2",0.02,1,"von"],["Đợt 4 – 9","Mỗi 30 ngày một đợt",0.03,6,"von"],["Đợt 10","Thông báo bàn giao (dự kiến Quý 1/2028)",0.25,1,"von"],["Đợt 11","Thông báo bàn giao sổ hồng",0.05,1,"von"]],
+ "n70":[["Đợt 1","Ký HĐMB – trong 10 ngày kể từ ký TTĐC",0.3,1,"von"],["Đợt 2","1 ngày sau đợt 1",0.4,1,"von"],["Đợt 3","Thông báo bàn giao (dự kiến Quý 1/2028)",0.25,1,"von"],["Đợt 4","Thông báo bàn giao sổ hồng",0.05,1,"von"]],
+ "n95":[["Đợt 1","Ký HĐMB – trong 10 ngày kể từ ký TTĐC",0.95,1,"von"],["Đợt 2 – 3","Bàn giao căn hộ (phần VAT còn lại) và bàn giao sổ hồng",0.05,1,"von"]],
+ "vay1":[["Đợt 1","Ký HĐMB – trong 10 ngày kể từ ký TTĐC",0.15,1,"von"],["Đợt 2","Ngân hàng giải ngân trong 14 ngày kể từ đợt 1",0.55,1,"nh"],["Đợt 3","Bàn giao (dự kiến Quý 1/2028) – ngân hàng",0.15,1,"nh"],["Đợt 3","Bàn giao (dự kiến Quý 1/2028) – khách hàng, gồm VAT còn lại",0.1,1,"von"],["Đợt 4","Thông báo bàn giao sổ hồng",0.05,1,"von"]],
+ "vay2":[["Đợt 1","Ký HĐMB – trong 10 ngày kể từ ký TTĐC",0.25,1,"von"],["Đợt 2","Ngân hàng giải ngân trong 14 ngày kể từ đợt 1",0.45,1,"nh"],["Đợt 3","Bàn giao (dự kiến Quý 1/2028) – ngân hàng",0.25,1,"nh"],["Đợt 4","Thông báo bàn giao sổ hồng",0.05,1,"von"]]
+}/*END*/;
+const COC = 50000000;
+let plan = 'chuan';
+const fmt = n => Math.round(n).toLocaleString('vi-VN');
+const num = s => Number(String(s).replace(/[^\d]/g,'')) || 0;
+const pctS = r => (r*100).toLocaleString('vi-VN') + '%';
+const priceEl = document.getElementById('price');
+function renderCalc(){
+  const t = num(priceEl.value), m$ = v => t ? fmt(v) : '–'; let von = COC, nh = 0;
+  const rows = PLANS[plan].map(([d,when,r,n,src],i) => {
+    const m = t*r*n - (i ? 0 : COC); src === 'nh' ? nh += m : von += m;
+    const b = `<span class="badge ${src==='nh'?'b-nh':'b-von'}">${src==='nh'?'Ngân hàng':'Vốn tự có'}</span>` + (n > 1 && t ? `<br><small>mỗi đợt ${fmt(t*r)}</small>` : '');
+    return `<tr><td><b>${d}</b></td><td>${when}</td><td>${n > 1 ? pctS(r)+' × '+n+' đợt' : pctS(r) + (i ? '' : ' (gồm cọc)')}</td><td class="money">${m$(m)}</td><td>${b}</td></tr>`;
+  });
+  schedBody.innerHTML = `<tr><td><b>Đặt cọc</b></td><td>Ký thỏa thuận đặt cọc (TTĐC)</td><td>–</td><td class="money">${fmt(COC)}</td><td><span class="badge b-von">Vốn tự có</span></td></tr>`
+    + rows.join('') + `<tr class="sum"><td colspan="3">Tổng cộng (100%)</td><td class="money">${m$(von+nh)}</td><td></td></tr>`;
+  const r0 = PLANS[plan][0][2];
+  summary.innerHTML = `<div><span>Cần chuẩn bị đến khi ký HĐMB</span><b>${t ? fmt(t*r0)+' đ' : pctS(r0)+' giá trị'}</b></div>
+    <div><span>Tổng vốn tự có</span><b>${t ? fmt(von)+' đ' : '–'}</b></div>
+    <div><span>Ngân hàng giải ngân</span><b>${nh ? fmt(nh)+' đ' : (plan.startsWith('vay') ? '70% giá trị' : 'Không vay')}</b></div>`;
+}
+priceEl.addEventListener('input', () => { const v = num(priceEl.value); priceEl.value = v ? v.toLocaleString('vi-VN') : ''; renderCalc(); });
+document.querySelectorAll('#pttt button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#pttt button').forEach(x => x.classList.toggle('active', x === b));
+  plan = b.dataset.k; renderCalc(); });
+renderCalc();
 
 /* ---------- Form đăng ký ---------- */
 regForm.addEventListener('submit', async e => {
